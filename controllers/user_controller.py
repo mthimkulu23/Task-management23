@@ -8,19 +8,21 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 
 def signup():
     # Get the JSON data from the request
-    data = request.get_json()
-    username = data['username']
-    contact = data['contact']
-    email = data['email']
-    password = data['password']
+    user_signup ={
+    'username':request.json.get('username'),
+     'contact':request.json.get('contact'),
+      'email':request.json.get('email'),
+       'password':request.json.get('password')
+       
+}
 
-    signup_data = {'username': username,'contact': contact,'email': email,'password': password}
+   
 
     # Check if the user is signing up for the first time
-    current_user_id = get_jwt_identity()
+    current_user_id = get_jwt_identity(user_signup)
     if current_user_id is None:
         # Call the register_new_user method from the Admin model
-        if not users.register_new_user(signup_data):
+        if not users.register_new_user(user_signup):
             return jsonify({'message': 'Signup Success'})
         else:
             return jsonify({'message': 'Signup Failed'}), 400
