@@ -7,7 +7,6 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 # The signup function handles the user registration process
 
 def admin_signup():
-    # Get the JSON data from the request
     data = request.get_json()
     username = data['username']
     contact = data['contact']
@@ -30,9 +29,8 @@ def admin_signup():
     
 
 
-# The login function handles the user login process
+# The login function handles the user login_admin process
 def admin_login():
-    # Get the JSON data from the request
     data = request.get_json()
     email = data['email']
     password = data['password']
