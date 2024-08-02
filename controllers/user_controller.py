@@ -32,20 +32,18 @@ def signup():
     
 
 
-# The login function handles the user login process
 def login():
     # Get the JSON data from the request
-    data = request.get_json()
-    email = data['email']
-    password = data['password']
-    print('Received data:', email, password)
+    user_login = {
+        'email': request.json.get('email'),
+        'password': request.json.get('password')
+    }
 
-    user = users.queryfilter_by(email=email).first()
-
-    if user and bcrypt.check_password_hash(user.password, password):
-        # Check if the user exists and the password is correct
-        access_token = create_access_token(identity=user.id)
+    # Check if the user exists and the password is correct
+    user = users.query.filter_by(email=user_login['email']).first()
+    if user and bcrypt.check_password_hash(user.password, user_login['password']):
         # Create an access token using the user's ID
+        access_token = create_access_token(identity=user.id)
         return jsonify({'message': 'Login Success', 'access_token': access_token})
     else:
         return jsonify({'message': 'Login Failed'}), 401
