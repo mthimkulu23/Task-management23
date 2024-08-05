@@ -1,6 +1,7 @@
-from flask import Flask
+from app import building_app
 
-app = Flask(__name__)
+
+app = building_app()
 
 
 
