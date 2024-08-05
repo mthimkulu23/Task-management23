@@ -12,8 +12,7 @@ def signup():
     'username':request.json.get('username'),
      'contact':request.json.get('contact'),
       'email':request.json.get('email'),
-       'password':request.json.get('password')
-       
+       'password':request.json.get('password')    
 }
 
    
@@ -40,7 +39,7 @@ def login():
     }
 
     # Check if the user exists and the password is correct
-    user = users.query.filter_by(email=user_login['email']).first()
+    user = users.queryfilter_by(email=user_login['email']).first()
     if user and bcrypt.check_password_hash(user.password, user_login['password']):
         # Create an access token using the user's ID
         access_token = create_access_token(identity=user.id)

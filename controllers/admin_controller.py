@@ -31,16 +31,16 @@ def admin_signup():
 
 
 # The login function handles the login_admin process
-def login():
+def admin_login():
     # Get the JSON data from the request
-    user_login = {
+    admin_login = {
         'email': request.json.get('email'),
         'password': request.json.get('password')
     }
 
     # Check if the user exists and the password is correct
-    user = get_admin.queryfilter_by(email=user_login['email']).first()
-    if user and bcrypt.check_password_hash(user.password, user_login['password']):
+    user = get_admin.queryfilter_by(email=admin_login['email']).first()
+    if user and bcrypt.check_password_hash(user.password, admin_login['password']):
         # Create an access token using the user's ID
         access_token = create_access_token(identity=user.id)
         return jsonify({'message': 'Login Success', 'access_token': access_token})
