@@ -20,7 +20,7 @@ def building_app():
      
         
         app.register_blueprint(users_routes.app)
-        app.register_blueprint(admin_routes.app)
+        # app.register_blueprint(admin_routes.app)
        
        
       

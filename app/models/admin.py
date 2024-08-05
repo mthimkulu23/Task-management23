@@ -1,17 +1,20 @@
 from .. import mongo
 
-class get_admin:
-    def register_new_user( user_admin):
-        # Check if the user already exists
-        existing_user = mongo.db.new_admin.find_one({'email':  user_admin['email']})
-        if existing_user:
-            return True
-        
+class GetAdmin:
+    @staticmethod
+    def check_if_admin_exists(username):
+        # Check if the admin already exists
+        existing_admin = mongo.db.new_admin.find_one({'username': username})
+        return existing_admin is not None
+
+    @staticmethod
+    def register_new_user(user_admin):
         # Insert the new user
         result = mongo.db.new_admin.insert_one(user_admin)
-        return False if result.inserted_id else True
+        return result.inserted_id is not None
 
-    def queryfilter_by(email):
+    @staticmethod
+    def query_by_email(email):
         # Find the user by email
         user = mongo.db.new_admin.find_one({'email': email})
         return user

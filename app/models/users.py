@@ -1,23 +1,22 @@
 from .. import mongo
 
 # The Users model
-class users:
-    
+class User:
    
-    def register_new_user(signup_data):
-        # Check if the user already exists
-        existing_user = mongo.db.new_user.find_one({'email': signup_data['email']})
-        if existing_user:
-            return True
-        
-        # Insert the new user
-        result = mongo.db.new_user.insert_one(signup_data)
-        return False if result.inserted_id else True
+    def find_user_by_username(username):
+        # Implement your logic to find a user by username from the database
+        existing_user = mongo.db.signup.find_one({'username': username})
+        return existing_user
 
-  
-    def queryfilter_by(email):
-        # Find the user by email
-        user = mongo.db.new_user.find_one({'email': email})
-        return user
+    
+    def create_user(username, email, password):
+        existing_user = User.find_user_by_username(username)
+        if existing_user:
+            return None  # User already exists
+        else:
+            # Insert the new user into the database
+            new_user = {'username': username, 'email': email, 'password': password}
+            mongo.db.signup.insert_one(new_user)
+            return new_user
         
 
