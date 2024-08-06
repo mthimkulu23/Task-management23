@@ -16,9 +16,11 @@ def signup_user():
         # Hash the password using Werkzeug's generate_password_hash()
         hashed_password = generate_password_hash(password)
         
-        # Added the 'contact' field
+        # Dictionary contain data 
         new_user = {'username': username, 'contact': contact, 'email': email, 'password': hashed_password}
         
         users.create_user(new_user)
         
         return jsonify(new_user)
+
+
