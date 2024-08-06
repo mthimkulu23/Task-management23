@@ -1,6 +1,6 @@
 from flask import jsonify,request
 from werkzeug.security import generate_password_hash
-from ..models.users import users
+from ..models.users import Users
 
 
 def signup_user():
@@ -10,8 +10,8 @@ def signup_user():
         email = request.json.get('email')
         password = request.json.get('password')
         
-        if not username or not email or not password:
-            return jsonify({'message': 'Username, email, and password are required'}), 400
+        # if not username or not email or not password:
+        #     return jsonify({'message': 'Username, email, and password are required'}), 400
         
         # Hash the password using Werkzeug's generate_password_hash()
         hashed_password = generate_password_hash(password)
@@ -19,8 +19,10 @@ def signup_user():
         # Dictionary contain data 
         new_user = {'username': username, 'contact': contact, 'email': email, 'password': hashed_password}
         
-        users.create_user(new_user)
+        Users.create_user(new_user)
         
-        return jsonify(new_user)
+        return jsonify({"message": "Successfully Signup a User"})
+    
+ 
 
 
