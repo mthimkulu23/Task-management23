@@ -1,21 +1,25 @@
-from flask import jsonify
-from .. import mongo
+from bson.objectid import ObjectId
+from .. import mongo  # Ensure mongo is properly imported
 
 
 
-class Users:
+class UserAdmin:
     
-    def create_user(new_user):
-        return mongo.db.user.insert_one(new_user)
+    def find_user(query):
+        return mongo.db.new_admin_user.find_one(query)
     
-    # def create_user(new_user):
-        
-    #     try:
-    #         # Insert the new user document into the 'users' collection
-    #         result = mongo.db.user.insert_one(new_user)
-    #         return jsonify(result)
-        
-    #     except Exception as e:
-    #         # Handle any errors that occur during the insert operation
-    #         print(f"Error creating user: {e}")
-    #         return jsonify({'message': 'Error creating user'}), 500
+    def insert_user(cls, user_data):
+        result = mongo.db.new_admin_user.insert_one(user_data)
+        return result
+    
+    def create_user(cls, user_data):
+        result = cls.insert_user(user_data)
+        return result.inserted_id
+    
+    def get_user_by_email(cls, email):
+        return cls.find_user({'email': email})
+    
+    def get_user_by_id(cls, user_id):
+        if not ObjectId.is_valid(user_id):
+            raise Exception('Invalid user ID')
+        return cls.find_user({'_id': ObjectId(user_id)})

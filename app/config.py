@@ -1,2 +1,2 @@
 class Config:
-    MONGO_URI = "mongodb://localhost:27017/onDB"
+    MONGO_URI = "mongodb://localhost:27017/MYDATABASE"

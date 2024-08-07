@@ -16,11 +16,9 @@ def building_app():
     with app.app_context():
         # this block used to ensure that the application context is available when registering the application blueprints
         from .routes import users_routes
-        from .routes import admin_routes
      
         
         app.register_blueprint(users_routes.app)
-        app.register_blueprint(admin_routes.app)
        
        
       
