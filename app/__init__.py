@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_pymongo import PyMongo
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
+from flask_jwt_extended import JWTManager
 from .config import Config
 
 mongo = PyMongo()
@@ -16,14 +16,13 @@ def building_app():
     
 # JWT Initialization
     jwt = JWTManager(app)
-    
-    # register blueprint for signup
-    
+   
     with app.app_context():
         # this block used to ensure that the application context is available when registering the application blueprints
         from .routes import users_routes
      
-        
+         
+    # register blueprint for signup
         app.register_blueprint(users_routes.app)
        
        
