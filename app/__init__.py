@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_pymongo import PyMongo
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 from .config import Config
 
 mongo = PyMongo()
@@ -10,6 +11,11 @@ def building_app():
     
     # initializes the PyMongo instance with the Flask application, allowing the application to use the MongoDB database.
     mongo.init_app(app)
+    
+    
+    
+# JWT Initialization
+    jwt = JWTManager(app)
     
     # register blueprint for signup
     
