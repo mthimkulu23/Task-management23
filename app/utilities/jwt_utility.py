@@ -1,15 +1,18 @@
-from flask_jwt_extended import JWTManager, create_access_token
+from flask_jwt_extended import JWTManager
 from flask import jsonify
+
 
 jwt = JWTManager()
 
 @jwt.user_identity_loader
 def user_identity_lookup(user):
-    return user.username
+    # Assuming 'user' is an instance of User_admin
+    return user.get('username')
 
 @jwt.user_claims_loader
 def add_claims_to_access_token(user):
-    return {"role": user.role}
+    # Assuming 'user' is an instance of User_admin
+    return {"role": user.get('role')}
 
 @jwt.expired_token_loader
 def expired_token_callback(jwt_header, jwt_payload):
@@ -45,6 +48,7 @@ def revoked_token_callback(jwt_header, jwt_payload):
         'message': 'The token has been revoked.',
         'error': 'token_revoked'
     }), 401
+
 
 
 
