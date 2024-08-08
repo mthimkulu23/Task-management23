@@ -1,42 +1,33 @@
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash
 
+
 from .. import mongo  
 
-
-class User_admin():
-    def __init__(self, username, email, password, role='user'):
-        self.username = username
+class User:
+    def __init__(self, email, username, password, role):
         self.email = email
-        self.password = generate_password_hash(password)
+        self.username = username
+        self.password = password
         self.role = role
-        
+
     def save(self):
-        # Insert the user document into the 'new_admin_user' collection
         mongo.db.new_admin_user.insert_one({
-            "username": self.username,
             "email": self.email,
+            "username": self.username,
             "password": self.password,
             "role": self.role
         })
 
+  
+    def find_by_email(email):
+        user_data = mongo.db.new_admin_user.find_one({"email": email})
+        if user_data:
+            return User(
+                email=user_data['email'],
+                username=user_data['username'],
+                password=user_data['password'],
+                role=user_data['role']
+            )
+        return None
    
-    def find_by_email(cls, email):
-        user = mongo.db.new_admin_user.find_one({"email": email})
-        return user
-
-    @staticmethod
-    def create_user(data):
-        user = User_admin(
-            username=data.get('username'),
-            email=data.get('email'),
-            password=data.get('password'),
-            role=data.get('role', 'user')
-        )
-        user.save()
-    
-    
-    
-
-
-
