@@ -21,7 +21,8 @@ def signup():
        # Create a new user object with the provided data.
         data = {"username": username,"email": email,"password": hashed_password,"role": role
         }
-
+        
+        # Create a new User object with the data provided in the 'data' dictionary
         user = User(**data)
         user.save()
         # Return a 201 Created response with a success message.
