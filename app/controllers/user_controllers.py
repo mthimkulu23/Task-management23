@@ -36,9 +36,7 @@ def login():
         password = request.json.get('password')
          # Find the user by the provided email.
         user = User.find_by_email(email)
-        print(f"User found: {user}")
-        print(f"Hashed password: {user.password}")
-        print(f"Provided password: {password}")
+        
         # Check if the user exists and the provided password matches the hashed password.
         if user and check_password_hash(user.password, password):
             access_token = create_access_token(identity={"email": user.email, "role": user.role})
